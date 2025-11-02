@@ -1,1 +1,4 @@
-DataSets 
+DataSets
+# ignore svg source files (keep pngs committed)
+Assets/*.svg
+.venv/
