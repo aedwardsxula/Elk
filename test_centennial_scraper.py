@@ -17,7 +17,13 @@ class TestCentennialScraper(unittest.TestCase):
         result = self.data
         # Assert
         self.assertIsInstance(result, dict, "Scraper should return a dict")
-        
+
+    def test_contains_expected_keys(self):
+        # Act
+        keys = set(self.data.keys())
+        # Assert
+        self.assertTrue({"headings", "paragraphs", "links"}.issubset(keys))
+       
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
