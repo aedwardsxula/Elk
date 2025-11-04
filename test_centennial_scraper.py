@@ -38,6 +38,37 @@ class TestCentennialScraper(unittest.TestCase):
         # Assert
         self.assertIn("xavier", first, "First heading should mention 'Xavier'")
 
+    # --------------- Unit tests (no network, fixture HTML) ---------------
+
+    def test_parse_dedup_and_extraction_from_fixture(self):
+        # Arrange
+        html = """
+        <html>
+          <body>
+            <h1>Xavier University of Louisiana</h1>
+            <h2>Campaign Priorities</h2>
+            <h2>Campaign Priorities</h2>
+            <p>Impact paragraph one.</p>
+            <p>Impact paragraph one.</p>
+            <a href="/about">About</a>
+            <a href="/about">About</a>
+          </body>
+        </html>
+        """
+        # Act
+        parsed = parse_centennial_page(html)
+
+        # Assert: correct keys
+        self.assertTrue({"headings", "paragraphs", "links"}.issubset(parsed.keys()))
+        # Assert: de-dup happened (only one of each duplicate remains)
+        self.assertEqual(parsed["headings"].count("Campaign Priorities"), 1)
+        self.assertEqual(parsed["paragraphs"].count("Impact paragraph one."), 1)
+        self.assertEqual(parsed["links"].count("About"), 1)
+        # Assert: types are lists of strings
+        self.assertTrue(all(isinstance(x, str) for x in parsed["headings"]))
+        self.assertTrue(all(isinstance(x, str) for x in parsed["paragraphs"]))
+        self.assertTrue(all(isinstance(x, str) for x in parsed["links"]))
+
        
 
 if __name__ == "__main__":
