@@ -23,6 +23,15 @@ class TestCentennialScraper(unittest.TestCase):
         keys = set(self.data.keys())
         # Assert
         self.assertTrue({"headings", "paragraphs", "links"}.issubset(keys))
+
+    def test_has_headings_and_paragraphs(self):
+        # Act
+        headings = self.data["headings"]
+        paragraphs = self.data["paragraphs"]
+        # Assert
+        self.assertGreater(len(headings), 0, "Expected at least one heading")
+        self.assertGreater(len(paragraphs), 0, "Expected at least one paragraph")
+
        
 
 if __name__ == "__main__":
