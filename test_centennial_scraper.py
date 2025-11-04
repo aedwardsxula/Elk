@@ -32,6 +32,12 @@ class TestCentennialScraper(unittest.TestCase):
         self.assertGreater(len(headings), 0, "Expected at least one heading")
         self.assertGreater(len(paragraphs), 0, "Expected at least one paragraph")
 
+    def test_first_heading_mentions_xavier(self):
+        # Act
+        first = (self.data["headings"][0] if self.data["headings"] else "").lower()
+        # Assert
+        self.assertIn("xavier", first, "First heading should mention 'Xavier'")
+
        
 
 if __name__ == "__main__":
