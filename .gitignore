@@ -5,3 +5,5 @@ Assets/*.svg
 # (remove the previous negative rule that forced tracking)
 Assets/uml.png
 .venv/
+__pycache__/
+*.py[cod]
