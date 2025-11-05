@@ -1,6 +1,7 @@
 DataSets
 # ignore svg source files (keep pngs committed)
 Assets/*.svg
-.gitignore: keep UML svg tracked
-!Assets/uml.svg
+# keep UML svg untracked so lead can commit it later
+# (remove the previous negative rule that forced tracking)
+Assets/uml.png
 .venv/
