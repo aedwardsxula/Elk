@@ -6,55 +6,56 @@
     .strokebox { stroke:#123; }
   </style>
 
-  <!-- Scraper -->
+  <!-- ParsedPage -->
   <g>
-    <rect x="40" y="40" width="340" height="160" rx="6" class="cls" />
-    <text x="60" y="64" class="title">Scraper</text>
-    <line x1="40" y1="80" x2="380" y2="80" stroke="#2b2b2b"/>
-    <text x="56" y="100" class="section">- headers: dict</text>
-    <text x="56" y="120" class="section">- session: requests.Session</text>
-    <text x="56" y="140" class="section">+ get_movies(year): List[Movie]</text>
-    <text x="56" y="160" class="section">+ fetch_search_page(url): str</text>
+    <rect x="40" y="40" width="320" height="120" rx="6" class="cls" />
+    <text x="60" y="64" class="title">ParsedPage</text>
+    <line x1="40" y1="88" x2="360" y2="88" stroke="#2b2b2b"/>
+    <text x="56" y="108" class="section">- html: str</text>
+    <text x="56" y="126" class="section">- metadata: dict</text>
+    <text x="56" y="144" class="section">+ extract_items(): List[dict]</text>
   </g>
 
-  <!-- SessionManager -->
+  <!-- MovieScraper -->
   <g>
-    <rect x="440" y="40" width="320" height="140" rx="6" class="cls" />
-    <text x="460" y="64" class="title">SessionManager</text>
-    <line x1="440" y1="88" x2="760" y2="88" stroke="#2b2b2b"/>
-    <text x="456" y="108" class="section">- retries: int</text>
-    <text x="456" y="128" class="section">+ create_session(): requests.Session</text>
-    <text x="456" y="148" class="section">+ get(url): Response</text>
+    <rect x="420" y="40" width="360" height="160" rx="6" class="cls" />
+    <text x="440" y="64" class="title">MovieScraper</text>
+    <line x1="420" y1="92" x2="780" y2="92" stroke="#2b2b2b"/>
+    <text x="436" y="112" class="section">- client: HttpsLClient</text>
+    <text x="436" y="132" class="section">- parser: ParsedPage</text>
+    <text x="436" y="152" class="section">+ scrape(year): List[Movie]</text>
+    <text x="436" y="172" class="section">+ fetch(url): ParsedPage</text>
   </g>
 
-  <!-- Movie DTO -->
+  <!-- Movie -->
   <g>
-    <rect x="40" y="240" width="260" height="140" rx="6" class="cls" />
-    <text x="60" y="264" class="title">Movie</text>
-    <line x1="40" y1="288" x2="300" y2="288" stroke="#2b2b2b"/>
-    <text x="56" y="308" class="section">- title: str</text>
-    <text x="56" y="328" class="section">- rating: float</text>
-    <text x="56" y="348" class="section">- plot: str</text>
-    <text x="56" y="368" class="section">+ to_dict(): dict</text>
+    <rect x="40" y="220" width="300" height="140" rx="6" class="cls" />
+    <text x="60" y="244" class="title">Movie</text>
+    <line x1="40" y1="268" x2="340" y2="268" stroke="#2b2b2b"/>
+    <text x="56" y="288" class="section">- title: str</text>
+    <text x="56" y="308" class="section">- rating: float</text>
+    <text x="56" y="328" class="section">- plot: str</text>
+    <text x="56" y="348" class="section">+ to_json(): dict</text>
   </g>
 
-  <!-- DataStore -->
+  <!-- DataSetManager -->
   <g>
-    <rect x="360" y="240" width="300" height="140" rx="6" class="cls" />
-    <text x="380" y="264" class="title">DataStore</text>
-    <line x1="360" y1="288" x2="660" y2="288" stroke="#2b2b2b"/>
-    <text x="376" y="308" class="section">- base_path: str</text>
-    <text x="376" y="328" class="section">+ save_movies(movies, filename)</text>
-    <text x="376" y="348" class="section">+ ensure_dir(path)</text>
+    <rect x="380" y="220" width="360" height="140" rx="6" class="cls" />
+    <text x="400" y="244" class="title">DataSetManager</text>
+    <line x1="380" y1="268" x2="740" y2="268" stroke="#2b2b2b"/>
+    <text x="396" y="288" class="section">- base_dir: str</text>
+    <text x="396" y="308" class="section">+ save_movies(movies, filename)</text>
+    <text x="396" y="328" class="section">+ load_movies(filename)</text>
   </g>
 
-  <!-- CLI / Runner -->
+  <!-- HttpsLClient -->
   <g>
-    <rect x="720" y="240" width="360" height="100" rx="6" class="cls" />
-    <text x="740" y="264" class="title">CLI / Runner</text>
-    <line x1="720" y1="288" x2="1080" y2="288" stroke="#2b2b2b"/>
-    <text x="736" y="308" class="section">+ main(): void</text>
-    <text x="736" y="328" class="section">+ parse_args(): Namespace</text>
+    <rect x="780" y="220" width="320" height="120" rx="6" class="cls" />
+    <text x="800" y="244" class="title">HttpsLClient</text>
+    <line x1="780" y1="268" x2="1100" y2="268" stroke="#2b2b2b"/>
+    <text x="796" y="288" class="section">- session: requests.Session</text>
+    <text x="796" y="308" class="section">+ get(url): Response</text>
+    <text x="796" y="328" class="section">+ get_with_retries(url)</text>
   </g>
 
   <!-- Relationships -->
