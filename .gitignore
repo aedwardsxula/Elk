@@ -1,4 +1,6 @@
 DataSets
 # ignore svg source files (keep pngs committed)
 Assets/*.svg
+.gitignore: keep UML svg tracked
+!Assets/uml.svg
 .venv/

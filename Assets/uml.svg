@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <style>
+    .cls { fill:#fff; stroke:#2b2b2b; stroke-width:2; font-family: Arial, Helvetica, sans-serif }
+    .title { font-weight:700; font-size:16px }
+    .section { font-size:13px }
+    .strokebox { stroke:#123; }
+  </style>
+
+  <!-- Scraper -->
+  <g>
+    <rect x="40" y="40" width="340" height="160" rx="6" class="cls" />
+    <text x="60" y="64" class="title">Scraper</text>
+    <line x1="40" y1="80" x2="380" y2="80" stroke="#2b2b2b"/>
+    <text x="56" y="100" class="section">- headers: dict</text>
+    <text x="56" y="120" class="section">- session: requests.Session</text>
+    <text x="56" y="140" class="section">+ get_movies(year): List[Movie]</text>
+    <text x="56" y="160" class="section">+ fetch_search_page(url): str</text>
+  </g>
+
+  <!-- SessionManager -->
+  <g>
+    <rect x="440" y="40" width="320" height="140" rx="6" class="cls" />
+    <text x="460" y="64" class="title">SessionManager</text>
+    <line x1="440" y1="88" x2="760" y2="88" stroke="#2b2b2b"/>
+    <text x="456" y="108" class="section">- retries: int</text>
+    <text x="456" y="128" class="section">+ create_session(): requests.Session</text>
+    <text x="456" y="148" class="section">+ get(url): Response</text>
+  </g>
+
+  <!-- Movie DTO -->
+  <g>
+    <rect x="40" y="240" width="260" height="140" rx="6" class="cls" />
+    <text x="60" y="264" class="title">Movie</text>
+    <line x1="40" y1="288" x2="300" y2="288" stroke="#2b2b2b"/>
+    <text x="56" y="308" class="section">- title: str</text>
+    <text x="56" y="328" class="section">- rating: float</text>
+    <text x="56" y="348" class="section">- plot: str</text>
+    <text x="56" y="368" class="section">+ to_dict(): dict</text>
+  </g>
+
+  <!-- DataStore -->
+  <g>
+    <rect x="360" y="240" width="300" height="140" rx="6" class="cls" />
+    <text x="380" y="264" class="title">DataStore</text>
+    <line x1="360" y1="288" x2="660" y2="288" stroke="#2b2b2b"/>
+    <text x="376" y="308" class="section">- base_path: str</text>
+    <text x="376" y="328" class="section">+ save_movies(movies, filename)</text>
+    <text x="376" y="348" class="section">+ ensure_dir(path)</text>
+  </g>
+
+  <!-- CLI / Runner -->
+  <g>
+    <rect x="720" y="240" width="360" height="100" rx="6" class="cls" />
+    <text x="740" y="264" class="title">CLI / Runner</text>
+    <line x1="720" y1="288" x2="1080" y2="288" stroke="#2b2b2b"/>
+    <text x="736" y="308" class="section">+ main(): void</text>
+    <text x="736" y="328" class="section">+ parse_args(): Namespace</text>
+  </g>
+
+  <!-- Relationships -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2b2b2b"/>
+    </marker>
+  </defs>
+
+  <!-- Scraper uses SessionManager -->
+  <line x1="380" y1="120" x2="440" y2="120" stroke="#2b2b2b" marker-end="url(#arrow)" />
+  <text x="420" y="110" font-size="12">uses</text>
+
+  <!-- Scraper creates Movie instances -->
+  <line x1="200" y1="200" x2="200" y2="240" stroke="#2b2b2b" marker-end="url(#arrow)" />
+  <text x="180" y="220" font-size="12">creates</text>
+
+  <!-- Scraper saves via DataStore -->
+  <line x1="360" y1="200" x2="360" y2="240" stroke="#2b2b2b" marker-end="url(#arrow)" />
+  <text x="330" y="220" font-size="12">persists to</text>
+
+  <!-- CLI drives Scraper -->
+  <line x1="720" y1="200" x2="200" y2="200" stroke="#2b2b2b" marker-end="url(#arrow)" />
+  <text x="470" y="190" font-size="12">invokes</text>
+
+  <!-- Footer / title -->
+  <text x="40" y="420" font-size="14" fill="#333">UML: Suggested class layout for this repository (refactor-friendly). Generated: 2025-11-05</text>
+
+</svg>
