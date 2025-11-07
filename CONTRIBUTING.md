@@ -24,7 +24,7 @@ All work follows the **Software Development Life Cycle (SDLC)**, uses **Continuo
    source venv/bin/activate
    pip install -r requirements.txt
    ```
-   
+
 --- 
 
 ## 💻 Contributing Workflow
@@ -72,15 +72,12 @@ All contributions to this project must follow the SDLC and use GitHub effectivel
 
 All testing should use Python’s **unittest** framework:
 
-1. **Tester & SWE Responsibilities:**  
-   - Write **10 tests** for the *Centennial Campaign Impact Scraper* function.  
-   - Write **10+ tests** for any class you implement from the UML diagram.
 
-2. **Test File Naming:**  
+1. **Test File Naming:**  
    - `test_<function_or_class>.py`  
    - Place test files in a `tests/` directory.
 
-3. **Running Tests:**  
+2. **Running Tests:**  
    ```bash
    python -m unittest discover tests
    ```
