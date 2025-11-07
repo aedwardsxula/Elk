@@ -46,3 +46,11 @@ Notes:
 	saves results into `DataSets/IMDB_Top_50_<year>.json` when successful.
 - If you hit blocking or captchas from IMDB, try increasing delays or running from a different IP.
 
+Visio import (how to get a .vsdx)
+---------------------------------
+If you want a native Visio file, open `Assets/uml.svg` in Microsoft Visio and use "Save As" ->
+Visio Drawing (.vsdx). Visio can import the SVG shapes and preserve vector geometry so you can
+apply a Visio UML template or edit shapes further. The repository contains `Assets/uml.svg` as
+the editable, Visio-importable source and `Assets/uml.png` as a raster preview.
+
+
