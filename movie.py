@@ -40,9 +40,13 @@ class Movie:
         }
 
 
+from movie_implementation import Movie
+
+__all__ = ["Movie"]
+
+
 import unittest
 import math
-from movie import Movie
 
 
 class TestMovieAdditional(unittest.TestCase):

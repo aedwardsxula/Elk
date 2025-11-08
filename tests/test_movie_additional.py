@@ -1,6 +1,6 @@
 import unittest
 import math
-from movie import Movie
+from movie_implementation import Movie
 
 
 class TestMovieAdditional(unittest.TestCase):
