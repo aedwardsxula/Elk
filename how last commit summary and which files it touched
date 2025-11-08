@@ -1,0 +1,144 @@
+[1mdiff --git a/movie.py b/movie.py[m
+[1mindex 05b270d..9b86540 100644[m
+[1m--- a/movie.py[m
+[1m+++ b/movie.py[m
+[36m@@ -37,3 +37,139 @@[m [mclass Movie:[m
+             "rating": self.rating,[m
+             "plot": self.plot,[m
+         }[m
+[32m+[m
+[32m+[m
+[32m+[m[32mimport unittest[m
+[32m+[m[32mimport math[m
+[32m+[m[32mfrom movie import Movie[m
+[32m+[m
+[32m+[m
+[32m+[m[32mclass TestMovieAdditional(unittest.TestCase):[m
+[32m+[m[32m    def test_constructor_with_float(self):[m
+[32m+[m[32m        m = Movie("A", 7.5, "Plot")[m
+[32m+[m[32m        self.assertIsInstance(m.rating, float)[m
+[32m+[m[32m        self.assertEqual(m.rating, 7.5)[m
+[32m+[m
+[32m+[m[32m    def test_constructor_with_int(self):[m
+[32m+[m[32m        m = Movie("B", 8, "Plot")[m
+[32m+[m[32m        self.assertIsInstance(m.rating, float)[m
+[32m+[m[32m        self.assertEqual(m.rating, 8.0)[m
+[32m+[m
+[32m+[m[32m    def test_constructor_with_string_convertible(self):[m
+[32m+[m[32m        m = Movie("C", "9.25", "Plot")[m
+[32m+[m[32m        self.assertIsInstance(m.rating, float)[m
+[32m+[m[32m        self.assertEqual(m.rating, 9.25)[m
+[32m+[m
+[32m+[m[32m    def test_constructor_with_string_nonconvertible_raises(self):[m
+[32m+[m[32m        with self.assertRaises(ValueError):[m
+[32m+[m[32m            Movie("D", "not-a-number", "Plot")[m
+[32m+[m
+[32m+[m[32m    def test_constructor_with_none_rating(self):[m
+[32m+[m[32m        m = Movie("E", None, "Plot")[m
+[32m+[m[32m        self.assertIsNone(m.rating)[m
+[32m+[m
+[32m+[m[32m    def test_constructor_with_bool_rating(self):[m
+[32m+[m[32m        m = Movie("F", True, "Plot")[m
+[32m+[m[32m        self.assertIsInstance(m.rating, float)[m
+[32m+[m[32m        self.assertEqual(m.rating, 1.0)[m
+[32m+[m
+[32m+[m[32m    def test_rating_nan(self):[m
+[32m+[m[32m        nan = float("nan")[m
+[32m+[m[32m        m = Movie("G", nan, "Plot")[m
+[32m+[m[32m        self.assertTrue(math.isnan(m.rating))[m
+[32m+[m
+[32m+[m[32m    def test_rating_inf(self):[m
+[32m+[m[32m        inf = float("inf")[m
+[32m+[m[32m        m = Movie("H", inf, "Plot")[m
+[32m+[m[32m        self.assertTrue(math.isinf(m.rating))[m
+[32m+[m[32m        self.assertGreater(m.rating, 0)[m
+[32m+[m
+[32m+[m[32m    def test_to_json_keys(self):[m
+[32m+[m[32m        m = Movie("I", 5, "Plot")[m
+[32m+[m[32m        d = m.to_json()[m
+[32m+[m[32m        self.assertCountEqual(list(d.keys()), ["title", "rating", "plot"])[m
+[32m+[m
+[32m+[m[32m    def test_to_json_values_match_attributes(self):[m
+[32m+[m[32m        m = Movie("J", 6.5, "Story")[m
+[32m+[m[32m        d = m.to_json()[m
+[32m+[m[32m        self.assertEqual(d["title"], m.title)[m
+[32m+[m[32m        self.assertEqual(d["rating"], m.rating)[m
+[32m+[m[32m        self.assertEqual(d["plot"], m.plot)[m
+[32m+[m
+[32m+[m[32m    def test_to_json_is_new_dict_modifying_does_not_change_object(self):[m
+[32m+[m[32m        m = Movie("K", 4.0, "Plot")[m
+[32m+[m[32m        d = m.to_json()[m
+[32m+[m[32m        d["title"] = "modified"[m
+[32m+[m[32m        d["rating"] = 0.0[m
+[32m+[m[32m        d["plot"] = "changed"[m
+[32m+[m[32m        # object should remain unchanged[m
+[32m+[m[32m        self.assertEqual(m.title, "K")[m
+[32m+[m[32m        self.assertEqual(m.rating, 4.0)[m
+[32m+[m[32m        self.assertEqual(m.plot, "Plot")[m
+[32m+[m
+[32m+[m[32m    def test_attribute_public_title_modification(self):[m
+[32m+[m[32m        m = Movie("L", 3.5, "P")[m
+[32m+[m[32m        m.title = "New Title"[m
+[32m+[m[32m        self.assertEqual(m.title, "New Title")[m
+[32m+[m
+[32m+[m[32m    def test_attribute_public_plot_modification(self):[m
+[32m+[m[32m        m = Movie("M", 2.0, "Old")[m
+[32m+[m[32m        m.plot = "New Plot"[m
+[32m+[m[32m        self.assertEqual(m.plot, "New Plot")[m
+[32m+[m
+[32m+[m[32m    def test_attribute_public_rating_modification_preserves_assignment(self):[m
+[32m+[m[32m        m = Movie("N", 7.0, "Plot")[m
+[32m+[m[32m        m.rating = 10  # direct assignment (no conversion in assignment)[m
+[32m+[m[32m        self.assertEqual(m.rating, 10)[m
+[32m+[m
+[32m+[m[32m    def test_multiple_instances_independence(self):[m
+[32m+[m[32m        a = Movie("O", 1.0, "A")[m
+[32m+[m[32m        b = Movie("P", 2.0, "B")[m
+[32m+[m[32m        a.title = "Changed O"[m
+[32m+[m[32m        b.plot = "Changed B"[m
+[32m+[m[32m        self.assertEqual(a.title, "Changed O")[m
+[32m+[m[32m        self.assertEqual(b.plot, "Changed B")[m
+[32m+[m[32m        self.assertNotEqual(a.title, b.title)[m
+[32m+[m[32m        self.assertNotEqual(a.plot, b.plot)[m
+[32m+[m
+[32m+[m[32m    def test_empty_strings_allowed(self):[m
+[32m+[m[32m        m = Movie("", 0, "")[m
+[32m+[m[32m        self.assertEqual(m.title, "")[m
+[32m+[m[32m        self.assertEqual(m.plot, "")[m
+[32m+[m[32m        self.assertEqual(m.rating, 0.0)[m
+[32m+[m
+[32m+[m[32m    def test_long_strings_allowed(self):[m
+[32m+[m[32m        long_title = "x" * 10000[m
+[32m+[m[32m        long_plot = "p" * 20000[m
+[32m+[m[32m        m = Movie(long_title, 5, long_plot)[m
+[32m+[m[32m        self.assertEqual(m.title, long_title)[m
+[32m+[m[32m        self.assertEqual(m.plot, long_plot)[m
+[32m+[m
+[32m+[m[32m    def test_unicode_strings_allowed(self):[m
+[32m+[m[32m        title = "映画"[m
+[32m+[m[32m        plot = "プロット"[m
+[32m+[m[32m        m = Movie(title, 8.8, plot)[m
+[32m+[m[32m        self.assertEqual(m.title, title)[m
+[32m+[m[32m        self.assertEqual(m.plot, plot)[m
+[32m+[m
+[32m+[m[32m    def test_rating_from_large_int(self):[m
+[32m+[m[32m        m = Movie("Q", 10**6, "Plot")[m
+[32m+[m[32m        self.assertEqual(m.rating, float(10**6))[m
+[32m+[m
+[32m+[m[32m    def test_constructor_with_empty_string_rating_raises(self):[m
+[32m+[m[32m        with self.assertRaises(ValueError):[m
+[32m+[m[32m            Movie("R", "", "Plot")[m
+[32m+[m
+[32m+[m[32m    def test_setting_rating_to_none_after_creation(self):[m
+[32m+[m[32m        m = Movie("S", 3.3, "Plot")[m
+[32m+[m[32m        m.rating = None[m
+[32m+[m[32m        self.assertIsNone(m.rating)[m
+[32m+[m
+[32m+[m[32m    def test_to_json_with_none_rating(self):[m
+[32m+[m[32m        m = Movie("T", None, "Plot")[m
+[32m+[m[32m        d = m.to_json()[m
+[32m+[m[32m        self.assertIsNone(d["rating"])[m
+[32m+[m
+[32m+[m
+[32m+[m[32mif __name__ == "__main__":[m
+[32m+[m[32m    unittest.main()[m

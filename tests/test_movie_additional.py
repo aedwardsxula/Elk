@@ -43,19 +43,16 @@ class TestMovieAdditional(unittest.TestCase):
         self.assertTrue(math.isinf(m.rating))
         self.assertGreater(m.rating, 0)
 
-    def test_to_json_keys(self):
+    def test_to_json_keys_and_values(self):
         m = Movie("I", 5, "Plot")
         d = m.to_json()
+        self.assertIsInstance(d, dict)
         self.assertCountEqual(list(d.keys()), ["title", "rating", "plot"])
-
-    def test_to_json_values_match_attributes(self):
-        m = Movie("J", 6.5, "Story")
-        d = m.to_json()
         self.assertEqual(d["title"], m.title)
         self.assertEqual(d["rating"], m.rating)
         self.assertEqual(d["plot"], m.plot)
 
-    def test_to_json_is_new_dict_modifying_does_not_change_object(self):
+    def test_to_json_returns_new_dict(self):
         m = Movie("K", 4.0, "Plot")
         d = m.to_json()
         d["title"] = "modified"
@@ -66,19 +63,16 @@ class TestMovieAdditional(unittest.TestCase):
         self.assertEqual(m.rating, 4.0)
         self.assertEqual(m.plot, "Plot")
 
-    def test_attribute_public_title_modification(self):
+    def test_attribute_title_and_plot_modification(self):
         m = Movie("L", 3.5, "P")
         m.title = "New Title"
-        self.assertEqual(m.title, "New Title")
-
-    def test_attribute_public_plot_modification(self):
-        m = Movie("M", 2.0, "Old")
         m.plot = "New Plot"
+        self.assertEqual(m.title, "New Title")
         self.assertEqual(m.plot, "New Plot")
 
-    def test_attribute_public_rating_modification_preserves_assignment(self):
+    def test_attribute_rating_assignment_preserved(self):
         m = Movie("N", 7.0, "Plot")
-        m.rating = 10  # direct assignment
+        m.rating = 10  # direct assignment (should be preserved)
         self.assertEqual(m.rating, 10)
 
     def test_multiple_instances_independence(self):
@@ -91,25 +85,17 @@ class TestMovieAdditional(unittest.TestCase):
         self.assertNotEqual(a.title, b.title)
         self.assertNotEqual(a.plot, b.plot)
 
-    def test_empty_strings_allowed(self):
-        m = Movie("", 0, "")
-        self.assertEqual(m.title, "")
-        self.assertEqual(m.plot, "")
-        self.assertEqual(m.rating, 0.0)
-
-    def test_long_strings_allowed(self):
-        long_title = "x" * 10000
-        long_plot = "p" * 20000
-        m = Movie(long_title, 5, long_plot)
-        self.assertEqual(m.title, long_title)
-        self.assertEqual(m.plot, long_plot)
-
-    def test_unicode_strings_allowed(self):
-        title = "映画"
-        plot = "プロット"
-        m = Movie(title, 8.8, plot)
-        self.assertEqual(m.title, title)
-        self.assertEqual(m.plot, plot)
+    def test_empty_long_and_unicode_strings_allowed(self):
+        cases = [
+            ("", 0, ""),
+            ("x" * 10000, 5, "p" * 20000),
+            ("映画", 8.8, "プロット"),
+        ]
+        for title, rating, plot in cases:
+            with self.subTest(title=title[:20], rating=rating):
+                m = Movie(title, rating, plot)
+                self.assertEqual(m.title, title)
+                self.assertEqual(m.plot, plot)
 
     def test_rating_from_large_int(self):
         m = Movie("Q", 10**6, "Plot")
@@ -128,6 +114,21 @@ class TestMovieAdditional(unittest.TestCase):
         m = Movie("T", None, "Plot")
         d = m.to_json()
         self.assertIsNone(d["rating"])
+
+    def test_to_json_type_stability_with_mutations(self):
+        m = Movie("U", 2.2, "Plot")
+        d1 = m.to_json()
+        d2 = m.to_json()
+        # separate dict objects and same content
+        self.assertIsNot(d1, d2)
+        self.assertEqual(d1, d2)
+
+    def test_rating_edge_cases_preserve_behavior(self):
+        # ensure non-numeric types that convert raise/convert as expected
+        with self.assertRaises(ValueError):
+            Movie("V", " ", "Plot")
+        m_bool = Movie("W", False, "Plot")
+        self.assertEqual(m_bool.rating, 0.0)
 
 
 if __name__ == "__main__":
