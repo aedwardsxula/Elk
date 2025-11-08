@@ -17,15 +17,19 @@ class DataSetManager:
 
 
    def save_movies(self, movies, filename):
+       if not isinstance(movies, list):
+           raise TypeError("Movies should be a list of dictionaries.")
+       
        filepath = os.path.join(self.base_dir, filename)
+       fieldnames = ['title', 'year', 'rating', 'genre']
+
        with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
-           fieldnames = ['title', 'year', 'rating', 'genre']
-           writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-
-           writer.writeheader()
-           for movie in movies:
-               writer.writerow(movie)
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for movie in movies:
+                if not isinstance(movie, dict):
+                    raise TypeError("Each movie should be a dictionary.")
+                writer.writerow(movie)
 
 
    def load_movies(self, filename):
