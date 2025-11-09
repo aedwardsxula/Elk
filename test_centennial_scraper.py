@@ -1,5 +1,7 @@
 import unittest
-from centennial_scraper import scrape_centennial_impact
+from centennial_scraper import scrape_centennial_impact, parse_centennial_page, fetch_html
+
+
 
 class TestCentennialScraper(unittest.TestCase):
 
