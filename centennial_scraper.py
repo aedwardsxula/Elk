@@ -1,4 +1,4 @@
-# eric_scraper.py
+# centennial_scrape.py
 import requests
 from bs4 import BeautifulSoup
 from typing import Dict, List, Tuple
