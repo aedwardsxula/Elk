@@ -1,3 +1,19 @@
+## Branding and UML
+
+Below are the visual assets for our project:
+
+- **Brand Image:**  
+  ![Brand](Assets/brand.png)
+
+- **Favicon:**  
+  ![Favicon](Assets/favicon.png)
+
+- **UML Diagram:**  
+  ![UML Diagram](Assets/uml.png)
+
+---
+
+
 # Elk
 tayjmcdile-alt, ausarkhan, apaiz12, ericbutler1209
 <https://github.com/nishantsahoo/IMDB_Top50_Scrape>
