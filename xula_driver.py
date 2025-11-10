@@ -1,45 +1,49 @@
 from centennial_scraper import scrape_centennial_impact
+from movie_implementation import Movie          # Movie class from UML lives in its own module
+from dataset_manager import DatasetManager      # DatasetManager class from UML
 
-def main():
+
+def main() -> None:
+    # ---------- Centennial Scraper ----------
     print("Running Centennial Scraper...")
     data = scrape_centennial_impact()
     print("Scraper Output:")
-    print(data) 
+    print(data)
 
-    from __future__ import annotations
+    print("\n-----------------------------------------\n")
 
-from typing import Dict, Optional
+    # ---------- Movie (UML) ----------
+    print("This is the Movie class from the UML diagram:")
+    movie_example = Movie(
+        title="Inception",
+        rating=8.8,
+        plot="A skilled thief enters dreams to steal secrets."
+    )
+    print("Movie Title:", movie_example.title)
+    print("Movie Rating:", movie_example.rating)
+    print("Movie Plot:", movie_example.plot)
+    print("Movie as JSON:", movie_example.to_json())
 
+    print("\n-----------------------------------------\n")
 
-class Movie:
-    """Simple Movie value object matching the UML.
+    # ---------- DatasetManager (UML) ----------
+    print("This is the DatasetManager class from the UML diagram:")
+    dm = DatasetManager()
 
-    Attributes are public and typed exactly as specified by the UML.
-    """
+    # These calls are wrapped so the driver won't crash if the
+    # methods are stubs or not fully implemented yet.
+    try:
+        loaded = dm.load_data()
+        print("Loaded Data:", loaded)
+    except Exception as e:
+        print("load_data() raised:", e)
 
-    def __init__(self, title: str, rating: Optional[float], plot: str) -> None:
-        self.title: str = title
+    try:
+        dataset = dm.get_dataset()
+        print("Dataset:", dataset)
+    except Exception as e:
+        print("get_dataset() raised:", e)
 
-        if rating is None:
-            self.rating: Optional[float] = None
-        else:
-            # Strings: empty string is invalid, non-convertible raises ValueError
-            if isinstance(rating, str):
-                if rating == "":
-                    raise ValueError("rating cannot be empty string")
-                try:
-                    self.rating = float(rating)
-                except ValueError:
-                    raise ValueError("rating string must be convertible to float")
-            else:
-                # ints, bools, floats -> convert to float
-                self.rating = float(rating)
-
-        self.plot: str = plot
-
-    def to_json(self) -> Dict[str, object]:
-        """Return a dict representation of the Movie."""
-        return {"title": self.title, "rating": self.rating, "plot": self.plot}
 
 if __name__ == "__main__":
     main()
