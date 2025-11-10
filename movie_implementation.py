@@ -1,34 +1,35 @@
-from __future__ import annotations
-
-from typing import Dict, Optional
+from typing import Dict
 
 
 class Movie:
-    """Simple Movie value object matching the UML.
+    """Movie class with basic movie information and accessor methods."""
 
-    Attributes are public and typed exactly as specified by the UML.
-    """
+    def __init__(self, title: str, rating: float, plot: str) -> None:
+        """Initialize Movie with title, rating, and plot."""
+        self.title = title
+        self.rating = rating
+        self.plot = plot
 
-    def __init__(self, title: str, rating: Optional[float], plot: str) -> None:
-        self.title: str = title
+    def get_title(self) -> str:
+        """Return the movie title."""
+        return self.title
 
-        if rating is None:
-            self.rating: Optional[float] = None
-        else:
-            # Strings: empty string is invalid, non-convertible raises ValueError
-            if isinstance(rating, str):
-                if rating == "":
-                    raise ValueError("rating cannot be empty string")
-                try:
-                    self.rating = float(rating)
-                except ValueError:
-                    raise ValueError("rating string must be convertible to float")
-            else:
-                # ints, bools, floats -> convert to float
-                self.rating = float(rating)
+    def get_year(self) -> str:
+        """Return the movie year (placeholder implementation)."""
+        return "Unknown"
 
-        self.plot: str = plot
+    def get_genre(self) -> str:
+        """Return the movie genre (placeholder implementation)."""
+        return "Unknown"
 
-    def to_json(self) -> Dict[str, object]:
-        """Return a dict representation of the Movie."""
-        return {"title": self.title, "rating": self.rating, "plot": self.plot}
+    def get_rating(self) -> float:
+        """Return the movie rating."""
+        return self.rating
+
+    def to_json(self) -> Dict:
+        """Return a dictionary representation of the Movie."""
+        return {
+            "title": self.title,
+            "rating": self.rating,
+            "plot": self.plot
+        }
