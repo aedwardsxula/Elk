@@ -87,5 +87,9 @@ class TestDataSetManager(unittest.TestCase):
             reader = csv.DictReader(f)
             self.assertEqual(reader.fieldnames, ['title', 'year', 'rating', 'genre'])
 
+    def test_get_dataset_file_not_found(self):
+        with self.assertRaises(FileNotFoundError):
+            self.manager.get_dataset()
+
 if __name__ == '__main__':
     unittest.main()       

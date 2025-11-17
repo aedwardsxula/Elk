@@ -2,6 +2,7 @@
 #Base_dir: str
 #save_movies(movies, filename)
 #load_movies(filename)
+#get_daraset()
 #movies: IMDB_Top_50_2016.json
 
 
@@ -40,3 +41,10 @@ class DataSetManager:
            for row in reader:
                movies.append(row)
        return movies
+   
+   def get_dataset(self):
+        dataset_path = os.path.join(self.base_dir, 'IMDB_Top_50_2016.json')
+        if not os.path.exists(dataset_path):
+            raise FileNotFoundError(f"Dataset file not found at {dataset_path}")
+        return dataset_path
+   
